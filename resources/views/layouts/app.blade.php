@@ -34,6 +34,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link" href="/threads">All Threads</a></li>
+                        <li><a class="nav-link" href="/threads/create">New Thread</a></li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,6 +48,8 @@
                                 @endforeach
                             </ul>
                         </li>
+                        
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
