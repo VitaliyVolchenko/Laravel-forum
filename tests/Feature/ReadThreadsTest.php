@@ -15,19 +15,8 @@ class ReadThreadsTest extends TestCase
 
         $this->thread = factory('App\Thread')->create();
     }
-
-
-    /** @test*/
-    /*public function a_user_can_browse_threads()
-    {
-        $thread = factory('App\Thread')->create();
-
-        $response = $this->get('/threads');
-        $response->assertSee($thread->title);
-
-        $response = $this->get('/threads/' . $thread->id);
-        $response->assertSee($thread->title);
-    }*/
+   
+    /* @test*/
     public function a_user_can_view_all_threads()
     {
 
@@ -68,4 +57,17 @@ class ReadThreadsTest extends TestCase
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
     }
+
+    // /** @test*/
+    // function a_user_can_filter_threads_by_any_username()
+    // {   
+    //     $this->signIn(create('App\User', ['name' => 'vital']));
+
+    //     $threadByVital = create('App\Thread', ['user_id' => auth()->id()]);        
+    //     $threadNotByVital = create('App\Thread');
+
+    //     $this->get('threads?by=vital')
+    //         ->assertSee($threadByVital->title)
+    //         ->assertSee($threadNotByVital->title);
+    // }
 }
