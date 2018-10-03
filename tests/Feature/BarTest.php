@@ -13,6 +13,6 @@ class BarTest extends TestCase
 
     public function it_()
     {
-
+        //
     }
 }
