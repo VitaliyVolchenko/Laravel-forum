@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordsActivity; 
+
     /**
      * Don't auto-apply mass assignment protection.
      *
@@ -27,12 +29,8 @@ class Thread extends Model
 
         static::deleting(function ($thread){
             $thread->replies()->delete();
-        });
-
-        // static::addGlobalScope('creator', function ($builder){
-        //     $builder->with('creator');
-        // });
-    }
+        });        
+    }   
 
     /**
      * Get a string path for the thread.
