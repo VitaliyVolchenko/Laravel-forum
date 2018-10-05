@@ -28,7 +28,7 @@
                     <div class="card-body">
                          {{ $thread->body }}
                     </div>
-                </div><br>                
+                </div>                
 
                 @foreach($replies as $reply)
                     @include('threads.reply')
@@ -68,7 +68,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>         
     </div>
