@@ -11,7 +11,3 @@
     @endslot
 @endcomponent
 
-{{-- @include('profiles.activities.activity', [
-    'heading' => 'my heading',
-    'body' => 'my body'
-]) --}}
