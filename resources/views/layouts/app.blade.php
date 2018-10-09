@@ -11,7 +11,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>    
-    {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -23,17 +22,18 @@
         body { padding-bottom: 100px; }
         .level { display: flex; align-items: center; }
         .flex { flex: 1; }
+        .mr-1 { margin-right: 1em; }
+        [v-cloak] { display: none; }
     </style>
 </head>
 <body>
     <div id="app">
-        @include('layouts.nav')
 
-        @yield('content')           
+        @include ('layouts.nav')
 
-        {{-- <example-component></example-component> --}}
-        {{-- <flash message="{{ session('flash') }}"></flash> --}}
-        {{-- <script type="text/javascript" src="/js/app.js"></script> --}}
+        @yield('content')
+    
+        <flash message="{{ session('flash') }}"></flash>
     </div>
 </body>
 </html>
