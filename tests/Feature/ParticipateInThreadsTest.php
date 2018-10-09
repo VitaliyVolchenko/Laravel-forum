@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class ParticipateInForumTest extends TestCase
+class ParticipateInThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -35,19 +35,31 @@ class ParticipateInForumTest extends TestCase
         ->assertSee($reply->body);
     }
 
-    /**@test
-    //ErrorException: Array to string conversion
-
-    function a_reply_requires_a_body()
+    /** @test*/   
+    function unauthorized_users_cannot_delete_replies()
     {
-        $this->withExceptionHandling()->signIn();
+        $this->withExceptionHandling();
 
-        $thread = create('App\Thread');
-        $reply = make('App\Reply', ['body' => null]);
+        $reply = create('App\Reply');
+            
+        $this->delete("/replies/{$reply->id}")
+            ->assertRedirect('/login');
 
+        $this->signIn()
+            ->delete("/replies/{$reply->id}")
+            ->assertStatus(403);
+    }
 
-        $this->post($thread->path() . '/replies' . $reply->toArray())
-            ->assertSessionHasErrors('body');
-    }*/
+    /** @test*/   
+    function authorized_users_can_delete_replies()
+    {
+        $this->signIn();
+        $reply = create('App\Reply', ['user_id' => auth()->id()]);
+
+        $this->delete("/replies/{$reply->id}")->assertStatus(302);
+
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);            
+    }
+
 
 }
