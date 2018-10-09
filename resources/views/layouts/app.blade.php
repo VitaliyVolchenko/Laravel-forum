@@ -10,7 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script>     --}}
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -28,7 +29,11 @@
     <div id="app">
         @include('layouts.nav')
 
-        @yield('content')
+        @yield('content')           
+
+        {{-- <example-component></example-component> --}}
+        <flash message="{{ session('flash') }}"></flash>
+        <script type="text/javascript" src="/js/app.js"></script>
     </div>
 </body>
 </html>
