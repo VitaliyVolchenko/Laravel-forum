@@ -20,7 +20,6 @@ class FavoritesTest extends TestCase
     // }
 
     /** @test */
-
     public function an_authenticated_user_can_favorite_any_reply()
     {
         $this->signIn();
@@ -33,6 +32,24 @@ class FavoritesTest extends TestCase
         //it should be recorded in the database.
         $this->assertCount(1, $reply->favorites);
     }
+
+    /** @test */
+    public function an_authenticated_user_can_unfavorite_a_reply()
+    {
+        $this->signIn();
+        
+        $reply = create('App\Reply');
+
+        $reply->favorite();
+        
+        //$this->post('replies/' . $reply->id . '/favorites');
+        // $this->assertCount(1, $reply->favorites);
+
+        $this->delete('replies/' . $reply->id . '/favorites');
+        
+        $this->assertCount(0, $reply->favorites);
+    }
+
 
     /** @test */
     function an_authenticated_user_may_only_favorite_a_reply_once()

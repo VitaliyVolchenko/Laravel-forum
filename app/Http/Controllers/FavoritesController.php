@@ -23,23 +23,12 @@ class FavoritesController extends Controller
      */
     public function store(Reply $reply)
     {
-         $reply->favorite();
+         $reply->favorite();         
+    }
 
-         return back();
-
-        //return $reply->favorites()->create(['user_id' => auth()->id() ]);    
-
-        // Favorite::create([
-        //         'user_id' => auth()->id(),
-        //         'favorited_id' => $reply->id,
-        //         'favorited_type' => get_class($reply)
-        // ]);
-
-        //  \DB::table('favorites')->insert([
-        //     'user_id' => auth()->id(),
-        //     'favorited_id' => $reply->id,
-        //     'favorited_type' => get_class($reply)
-        // ]);
-
+    public function destroy(Reply $reply)
+    {
+         $reply->unfavorite();
+         
     }
 }

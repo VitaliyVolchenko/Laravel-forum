@@ -6,53 +6,56 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-    //use Favoriteable, RecordsActivity; 
-    use RecordsActivity;
+    use Favoritable, RecordsActivity;
 
+    /**
+     * Don't auto-apply mass assignment protection.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
     protected $with = ['owner', 'favorites'];
 
-    public function  owner()
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['favoritesCount', 'isFavorited'];
+
+    /**
+     * A reply has an owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * A reply belongs to a thread.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function thread()
     {
         return $this->belongsTo(Thread::class);
     }
 
+    /**
+     * Determine the path to the reply.
+     *
+     * @return string
+     */
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
     }
-
-    public function favorites()
-    {
-        return $this->morphMany(Favorite::class, 'favorited');
-    }
-
-    public function favorite()
-    {
-        $attributes = ['user_id' => auth()->id()];
-        if (! $this->favorites()->where($attributes)->exists()) {
-            return $this->favorites()->create($attributes);
-        }
-    }
-
-    public function isFavorited()
-    {
-        
-        //return $this->favorites()->where('user_id', auth()->id())->exists();
-        return !! $this->favorites->where('user_id', auth()->id())->count();
-        
-    }
-
-    public function getFavoritesCountAttribute()
-    {
-        return $this->favorites->count();
-
-    }
-
 }
