@@ -26,15 +26,9 @@ class Thread extends Model
         static::addGlobalScope('replyCount', function ($builder){
             $builder->withCount('replies');
         });
-
-        // static::deleting(function ($thread){
-        //     $thread->replies()->delete();
-        // });
-
+        
         static::deleting(function ($thread){
-            // $thread->replies->each(function($reply){
-            //     $reply->delete();
-            // });
+            
             $thread->replies->each->delete();
         });    
     }   
@@ -93,7 +87,7 @@ class Thread extends Model
      */
     public function addReply($reply)
     {
-        $this->replies()->create($reply);
+        return $this->replies()->create($reply);
     }
 
     /**

@@ -21,6 +21,7 @@ Vue.component('thread-view', require('./pages/Thread.vue'));
 Vue.component('reply', require('./components/Reply.vue'));
 Vue.component('favorite', require('./components/Favorite.vue'));
 Vue.component('replies', require('./components/Replies.vue'));
+Vue.component('new-reply', require('./components/NewReply.vue'));
 
 const app = new Vue({
     el: '#app'

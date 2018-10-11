@@ -1,7 +1,7 @@
 <template>       
-
+    
     <div :id="'reply-'+id" class="card panel-default">
-
+        
         <div class="card-header">
             <div class="level">
                 <h5 class="flex">
@@ -9,13 +9,13 @@
                     </a> said {{ data.created_at }}...    
                 </h5>                
                 
-                <div v-if="signIn">                                  
+                <div v-if="signedIn">                                  
                     <favorite :reply="data"></favorite>                    
                 </div>
                
             </div>
         </div>    
-
+        
         <div class="card-body">
             <div v-if="editing">
                 <div class="form-group">
@@ -57,8 +57,8 @@
         },
 
         computed: {
-            signIn() {
-                return window.App.signIn;
+            signedIn() {
+                return window.App.signedIn;
             },
             canUpdate() {
                 return this.authorize(user => this.data.user_id == user.id);

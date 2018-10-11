@@ -30,26 +30,13 @@
                         </div>
                     </div>   
                     
-                <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>                     
+                    <replies :data="{{ $thread->replies }}"
+                    @added="repliesCount++"
+                    @removed="repliesCount--"></replies>                     
 
                     {{-- {{ $replies->links() }}  --}}
                     
-                    <br>
-
-                    @if(auth()->check())
-                    
-                        <form method="POST" action="{{ $thread->path().'/replies' }}">
-                            {{ csrf_field() }}
-                            <div class="forum-group">
-                                {{--<label for="body">Body:</label>--}}
-                                <textarea name="body" id="body" class="form-control" placeholder="Have something to day?"></textarea>
-                                <button type="submit" class="btn btn-default">Post</button>
-                            </div>
-                        </form>
-                    
-                    @else
-                        <p>Please<a href="{{ route('login') }}"> sign in</a> to participicate in this discussion.</p>
-                    @endif
+                    <br>                   
 
                 </div>
             
