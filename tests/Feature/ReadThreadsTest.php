@@ -93,4 +93,18 @@ class ReadThreadsTest extends TestCase
         
     }
 
+    /** @test*/
+    function a_user_can_request_all_replies_for_a_given_thread()
+    {   
+        $thread = create('App\Thread');
+        create('App\Reply', ['thread_id' => $thread->id], 2);
+
+        $response = $this->getJson($thread->path() . '/replies')->json();
+
+        //dd($response);
+
+        $this->assertCount(1, $response['data']);
+        $this->assertEquals(2, $response['total']);
+    }
+
 }
