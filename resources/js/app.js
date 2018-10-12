@@ -23,6 +23,7 @@ Vue.component('favorite', require('./components/Favorite.vue'));
 Vue.component('replies', require('./components/Replies.vue'));
 Vue.component('new-reply', require('./components/NewReply.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
+Vue.component('subscribe-button', require('./components/SubscribeButton.vue'));
 
 const app = new Vue({
     el: '#app'
