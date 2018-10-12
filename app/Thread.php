@@ -23,9 +23,9 @@ class Thread extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('replyCount', function ($builder){
-            $builder->withCount('replies');
-        });
+        // static::addGlobalScope('replyCount', function ($builder){
+        //     $builder->withCount('replies');
+        // });
         
         static::deleting(function ($thread){
             
@@ -70,15 +70,10 @@ class Thread extends Model
      */
     public function replies()
     {
-        return $this->hasMany(Reply::class);
-    //                 ->withCount('favorites')
-    //                 ->with('owner');
+        return $this->hasMany(Reply::class);    
     }
 
-    // public function getReplyCountAttribute()
-    // {
-    //     return $this->replies()->count();
-    // }
+    
 
     /**
      * Add a reply to the thread.
@@ -88,6 +83,9 @@ class Thread extends Model
     public function addReply($reply)
     {
         return $this->replies()->create($reply);
+        // $reply = $this->replies()->create($reply);
+        // $this->increment('replies_count');
+        // return $reply;
     }
 
     /**

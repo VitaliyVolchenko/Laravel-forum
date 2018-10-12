@@ -19,21 +19,16 @@ class ParticipateInThreadsTest extends TestCase
 
     /** @test*/
     public function an_authenticated_user_may_participate_in_forum_threads()
-    {
-        //Given we have a authificated user
-        $user = factory('App\User')->create();
-        $this->be($user = factory('App\User')->create());
+    {        
+        $this->signIn();  
+        
+        $thread = create('App\Thread');        
+        $reply = make('App\Reply');
 
-        //And an existing thread
-        $thread = factory('App\Thread')->create();
-
-        //When the user adds a reply to the thread
-        $reply = factory('App\Reply')->make();
         $this->post($thread->path().'/replies', $reply->toArray());
-
-        //Then theur reply shoud be visible on the page
-        $this->get($thread->path())
-        ->assertSee($reply->body);
+        
+        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
     }
 
     /** @test*/   
@@ -59,7 +54,8 @@ class ParticipateInThreadsTest extends TestCase
 
         $this->delete("/replies/{$reply->id}")->assertStatus(302);
 
-        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);            
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);  
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);          
     }
 
     /** @test*/   
