@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -48,13 +49,7 @@ class NotificationsTest extends TestCase
     /** @test*/ 
     public function a_user_can_fetch_their_unread_notifications()
     {      
-        create(DatabaseNotification::class);  
-        // $thread = create('App\Thread')->subscribe(); 
-        
-        // $thread->addReply([
-        //     'user_id' => create('App\User')->id,
-        //     'body' => 'Some reply here'
-        // ]);           
+        create(DatabaseNotification::class);             
         
         $this->assertCount(
             1,
@@ -66,12 +61,7 @@ class NotificationsTest extends TestCase
     public function a_user_can_mark_a_notification_as_read()
     {        
         create(DatabaseNotification::class);
-        // $thread = create('App\Thread')->subscribe(); 
         
-        // $thread->addReply([
-        //     'user_id' => create('App\User')->id,
-        //     'body' => 'Some reply here'
-        // ]);
         tap(auth()->user(), function($user){
 
             $this->assertCount(1, $user->unreadNotifications);

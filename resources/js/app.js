@@ -24,6 +24,7 @@ Vue.component('replies', require('./components/Replies.vue'));
 Vue.component('new-reply', require('./components/NewReply.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('subscribe-button', require('./components/SubscribeButton.vue'));
+Vue.component('user-notifications', require('./components/UserNotifications.vue'));
 
 const app = new Vue({
     el: '#app'
