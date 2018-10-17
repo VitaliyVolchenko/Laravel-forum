@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Spam;
 use App\Events\ThreadHasNewReply;
 use App\Filters\ThreadFilters;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,11 +25,7 @@ class Thread extends Model
 
     protected static function boot()
     {
-        parent::boot();
-
-        // static::addGlobalScope('replyCount', function ($builder){
-        //     $builder->withCount('replies');
-        // });
+        parent::boot();        
         
         static::deleting(function ($thread){
             
@@ -76,9 +71,7 @@ class Thread extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);    
-    }
-
-    
+    }    
 
     /**
      * Add a reply to the thread.
@@ -87,13 +80,13 @@ class Thread extends Model
      */
     public function addReply($reply)
     {
-        (new Spam)->detect($reply->body);
+        //(new Spam)->detect($reply->body);
 
         $reply = $this->replies()->create($reply);
 
-        $this->notifySubscribers($reply);
+        //$this->notifySubscribers($reply);
 
-        //event(new ThreadHasNewReply($this, $reply));        
+        event(new ThreadHasNewReply($this, $reply));        
         
         return $reply;
     }

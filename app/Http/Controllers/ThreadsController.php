@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Inspections\Spam;
 use Carbon\Carbon;
 use App\Channel;
 use App\Filters\ThreadFilters;
