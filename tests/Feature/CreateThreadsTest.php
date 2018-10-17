@@ -25,19 +25,19 @@ class CreateThreadsTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    /** @test*/
-    public function an_authenticated_user_can_create_new_forum_threads()
-    {
-        $this->signIn();
+    // /** @test*/
+    // public function an_authenticated_user_can_create_new_forum_threads()
+    // {
+    //     $this->signIn();
 
-        $thread = make('App\Thread');
+    //     $thread = make('App\Thread');
 
-        $response = $this->post('/threads', $thread->toArray());
+    //     $response = $this->post('/threads', $thread->toArray());
 
-        $this->get($response->headers->get('Location'))
-                ->assertSee($thread->title)
-                ->assertSee($thread->body);
-    }
+    //     $this->get($response->headers->get('Location'))
+    //             ->assertSee($thread->title)
+    //             ->assertSee($thread->body);
+    // }
 
     /** @test*/
     public function a_thread_requires_a_title()
@@ -95,17 +95,7 @@ class CreateThreadsTest extends TestCase
         $response->assertStatus(204);
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
-        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
-
-        // $this->assertDatabaseMissing('activities', [
-        //     'subject_id' => $thread->id,
-        //     'subject_type' => get_class($thread)
-        //     ]);
-
-        // $this->assertDatabaseMissing('activities', [
-        //     'subject_id' => $reply->id,
-        //     'subject_type' => get_class($reply)
-        //     ]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);        
 
         $this->assertEquals(0, Activity::count());
 
