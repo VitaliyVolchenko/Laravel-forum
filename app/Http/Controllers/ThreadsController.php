@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Thread;
@@ -79,22 +80,22 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
-        // return view('threads.show', [
-        //     'thread' => $thread,
-        //     'replies' => $thread->replies()->paginate(20)
-        // ]);
+
+        if (auth()->check()) {
+            auth()->user()->read($thread);
+        }
+        // // Record that the user visited this page/
+        // // Record a timestamp.
+        // $key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);
+
+        // cache()->forever($key, Carbon::now());
+
+        return view('threads.show', compact('thread'));        
     }
 
     public function destroy($channelId, Thread $thread)
     {
-        // if($thread->user_id != auth()->id()){
-        //     // if(request()->wantsJson()){
-        //     //     return response(['status' => 'Permission Denied'], 403);
-        //     // }
-        //     //return redirect('/login');
-        //     abort(403, 'You do not have permission to do this.');
-        // }
+        
         $this->authorize('update', $thread);
         
         $thread->delete();

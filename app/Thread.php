@@ -143,4 +143,17 @@ class Thread extends Model
             ->where('user_id', auth()->id())
             ->exists();
     }
+
+    public function hasUpdatesFor($user)
+    {
+        // // Look in the cache for the proper ker.
+
+        // // compare that carbon instance with the $thread->updated_at
+        // $key = sprintf("users.%s.visits.%s", auth()->id(), $this->id);
+        // // users.50.visits.1
+
+        $key = $user->visitedThreadCacheKey($this);
+
+        return $this->updated_at > cache($key);
+    }
 }
