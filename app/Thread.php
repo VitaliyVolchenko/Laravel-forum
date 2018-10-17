@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Spam;
 use App\Events\ThreadHasNewReply;
 use App\Filters\ThreadFilters;
 use Illuminate\Database\Eloquent\Builder;
@@ -86,6 +87,8 @@ class Thread extends Model
      */
     public function addReply($reply)
     {
+        (new Spam)->detect($reply->body);
+
         $reply = $this->replies()->create($reply);
 
         $this->notifySubscribers($reply);

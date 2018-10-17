@@ -21,6 +21,15 @@ class RepliesController extends Controller
     public function store($channelId, Thread $thread)
     {
         $this->validate(request(), ['body' => 'required']);
+        $spam->detect(request('body'));
+
+        // if (stripos(request('body'), 'yahoo customer support') !== false){
+        //     throw new \Exception('Your reply contains spam.');
+        // }
+
+        // if(str_contains(request('body'), 'yahoo customer support')) {
+        //     throw new \Exception('Your reply contains spam.');
+        // }
 
         $reply = $thread->addReply([
             'body' => request('body'),
