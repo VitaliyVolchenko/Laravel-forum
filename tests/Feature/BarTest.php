@@ -10,7 +10,6 @@ class BarTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-
     public function it_()
     {
         //
