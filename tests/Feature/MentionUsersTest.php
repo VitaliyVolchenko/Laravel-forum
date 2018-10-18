@@ -30,7 +30,7 @@ class MentionUsersTest extends TestCase
             'body' => '@vitall look at this.'
         ]);
 
-        $this->json('POST', $thread->path() . '/replies', $reply->toArray());
+        $this->json('post', $thread->path() . '/replies', $reply->toArray());
 
         // Than Vital should be notified.
         $this->assertCount(1, $vital->notifications);

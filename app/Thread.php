@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ThreadReceivedNewReply;
 use App\Events\ThreadHasNewReply;
 use App\Filters\ThreadFilters;
 use Illuminate\Database\Eloquent\Builder;
@@ -79,25 +80,15 @@ class Thread extends Model
      * @param $reply
      */
     public function addReply($reply)
-    {
-        //(new Spam)->detect($reply->body);
-
+    {        
         $reply = $this->replies()->create($reply);
 
-        //$this->notifySubscribers($reply);
+        event(new ThreadReceivedNewReply($reply));  
 
-        event(new ThreadHasNewReply($this, $reply));        
+        //$this->notifySubscribers($reply);              
         
         return $reply;
-    }
-
-    public function notifySubscribers($reply)
-    {
-        $this->subscriptions
-        ->where('user_id', '!=', $reply->user_id)
-        ->each
-        ->notify($reply);
-    }
+    }   
 
     /**
      * Apply all relevant thread filters.
