@@ -60,7 +60,7 @@ class ThreadsController extends Controller
             'channel_id' => 'required|exists:channels,id'
         ]);
 
-        $spam->detect(request('body'));
+        //$spam->detect(request('body'));
 
         $thread = Thread::create([
             'user_id' => auth()->id(),
@@ -85,12 +85,7 @@ class ThreadsController extends Controller
 
         if (auth()->check()) {
             auth()->user()->read($thread);
-        }
-        // // Record that the user visited this page/
-        // // Record a timestamp.
-        // $key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);
-
-        // cache()->forever($key, Carbon::now());
+        }        
 
         return view('threads.show', compact('thread'));        
     }
