@@ -27,7 +27,7 @@ class MentionUsersTest extends TestCase
         $thread = create('App\Thread');
         // And Vital replies and mentions @Vital
         $reply = make('App\Reply',[
-            'body' => '@vitall look at this.'
+            'body' => '@vital look at this.'
         ]);
 
         $this->json('post', $thread->path() . '/replies', $reply->toArray());
@@ -35,4 +35,16 @@ class MentionUsersTest extends TestCase
         // Than Vital should be notified.
         $this->assertCount(1, $vital->notifications);
     }
+
+     /** @test */
+     function it_can_fetch_all_mentioned_users_starting_with_the_given_characters()
+     {
+         create('App\User', ['name' => 'vital']);
+         create('App\User', ['name' => 'vital2']);
+         create('App\User', ['name' => 'votal']);
+
+         $results = $this->json('GET', '/api/users', ['name' => 'vital']);
+
+         $this->assertCount(2, $results->json());
+     }
 }

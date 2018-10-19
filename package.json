@@ -21,8 +21,10 @@
     },
     "dependencies": {
         "ajv": "^6.5.4",
+        "at.js": "^1.5.4",
         "font-awesome": "^4.7.0",
         "imagemin": "^5.3.1",
+        "jquery.caret": "^0.3.1",
         "moment": "^2.22.2"
     }
 }
