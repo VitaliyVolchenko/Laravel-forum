@@ -61,6 +61,16 @@ class User extends Authenticatable
             Carbon::now()
         );
     }
+
+    public function avatar()
+    {
+        return asset($this->avatar_path ?: 'avatars/default.jpg');
+        // if (! $this->avatar_path) {
+        //     return 'avatars/default.jpg';
+        // }
+
+        // return $this->avatar_path;
+    }
     
     /**
      * Get the cache key for when a user reads a thread.
