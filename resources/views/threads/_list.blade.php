@@ -13,11 +13,11 @@
                                 {{ $thread->title }}
                             @endif                                        
                         </a>
-                    </h4>
-                    
-                <h5>
-                    Posted By: <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a>
-                </h5>
+                    </h4>                    
+                    <h5>
+                                                   
+                        Posted By: <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator['name'] }}</a>
+                    </h5>
                 </div>
 
                 <a href="{{ $thread->path() }}">
@@ -31,7 +31,7 @@
         </div> 
                                 
     </div>
-    <br>
-    @empty
+    
+@empty
     <p>There are no relevant results at this time.</p>
 @endforelse

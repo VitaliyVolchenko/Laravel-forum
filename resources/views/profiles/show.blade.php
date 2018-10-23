@@ -4,21 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="page-header">
-                    <h1>
-                        {{ $profileUser->name }}
-                    </h1>
-                    @can ('update', $profileUser)
-                        <form action="{{ route('avatar', $profileUser) }}" method="POST" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-
-                            <input type="file" name="avatar"><br>
-                            <button type="submit" class="btn btn-primary">Add Avatar</button>
-                        </form>
-
-                    @endcan
-                    
-                    <img src="{{ asset("storage/$profileUser->avatar_path") }}" width="100" height="100">
+                <div class="page-header">                     
                     <avatar-form :user="{{ $profileUser }}"></avatar-form>
                 </div><br>
 

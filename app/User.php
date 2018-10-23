@@ -62,15 +62,11 @@ class User extends Authenticatable
         );
     }
 
-    public function avatar()
-    {
-        return asset($this->avatar_path ?: 'avatars/default.jpg');
-        // if (! $this->avatar_path) {
-        //     return 'avatars/default.jpg';
-        // }
-
-        // return $this->avatar_path;
-    }
+    public function getAvatarPathAttribute($avatar)
+    {    
+        return asset($avatar ? "/storage/$avatar" : "/storage/images/avatars/default.png");    
+        // return asset($avatar ?: "/storage/images/avatars/default.png");           
+    }    
     
     /**
      * Get the cache key for when a user reads a thread.

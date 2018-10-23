@@ -7,6 +7,7 @@ use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadsController extends Controller
 {
@@ -31,7 +32,7 @@ class ThreadsController extends Controller
 
         if (request()->wantsJson()) {
             return $threads;
-        }
+        }       
 
         return view('threads.index', compact('threads'));
     }
@@ -85,7 +86,8 @@ class ThreadsController extends Controller
 
         if (auth()->check()) {
             auth()->user()->read($thread);
-        }        
+        } 
+               
 
         return view('threads.show', compact('thread'));        
     }
@@ -111,8 +113,7 @@ class ThreadsController extends Controller
      * @return mixed
      */
     protected function getThreads(Channel $channel, ThreadFilters $filters)
-    {
-        //$threads = Thread::with('channel')->latest()->filter($filters);
+    {        
         $threads = Thread::latest()->filter($filters);
 
         if ($channel->exists) {
