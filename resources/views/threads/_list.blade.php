@@ -14,8 +14,7 @@
                             @endif                                        
                         </a>
                     </h4>                    
-                    <h5>
-                        {{-- Posted By: {{ $thread->creator['name'] }} --}}
+                    <h5>                        
                         Posted By: <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a>
                     </h5>
                 </div>
@@ -31,7 +30,7 @@
         </div> 
 
         <div class="card-footer">
-            {{ $thread->visits() }} Visits
+            {{ $thread->visits()->count() }} Visits
         </div>
                                 
     </div>

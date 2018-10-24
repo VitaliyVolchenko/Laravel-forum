@@ -11,7 +11,7 @@ use App\Notifications\ThreadWasUpdated;
 
 class Thread extends Model
 {
-    use RecordsActivity, RecordsVisits; 
+    use RecordsActivity; 
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -137,5 +137,10 @@ class Thread extends Model
 
         return $this->updated_at > cache($key);
     }
+
+    public function visits()
+    {
+        return new Visits($this);        
+    }   
     
 }
