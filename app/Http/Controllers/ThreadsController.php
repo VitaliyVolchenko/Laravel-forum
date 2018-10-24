@@ -60,7 +60,8 @@ class ThreadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {       
+
         $this->validate($request, [
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
