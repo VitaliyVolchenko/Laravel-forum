@@ -11,7 +11,7 @@ use App\Notifications\ThreadWasUpdated;
 
 class Thread extends Model
 {
-    use RecordsActivity; 
+    use RecordsActivity, RecordsVisits; 
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -132,15 +132,10 @@ class Thread extends Model
     }
 
     public function hasUpdatesFor($user)
-    {
-        // // Look in the cache for the proper ker.
-
-        // // compare that carbon instance with the $thread->updated_at
-        // $key = sprintf("users.%s.visits.%s", auth()->id(), $this->id);
-        // // users.50.visits.1
-
+    {        
         $key = $user->visitedThreadCacheKey($this);
 
         return $this->updated_at > cache($key);
     }
+    
 }
