@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Trending;
-//use Carbon\Carbon;
 use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Thread;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Redis;
 
 class ThreadsController extends Controller
 {
@@ -33,9 +31,7 @@ class ThreadsController extends Controller
 
         if (request()->wantsJson()) {
             return $threads;
-        }         
-
-        //$trending = array_map('json_decode', Redis::zrevrange('trending_threads', 0, 4));         
+        }                
 
         return view('threads.index', [
             'threads' => $threads,
@@ -67,16 +63,17 @@ class ThreadsController extends Controller
             'body' => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id'
         ]);
-
-        //$spam->detect(request('body'));
-
+       
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),
             'title' => request('title'),
-            'body' => request('body'),
-            'slug' => request('title')
+            'body' => request('body'),            
         ]);
+
+        if (request()->wantsJson()) {
+            return response($thread, 201);
+        }
 
         return redirect($thread->path())
             ->with('flash', 'Your thread has been published!');
@@ -91,16 +88,13 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread, Trending $trending)
     {
-
         if (auth()->check()) {
             auth()->user()->read($thread);
         } 
         
         $trending->push($thread);   
 
-        $thread->increment('visits');
-        
-        //$thread->visits()->record();
+        $thread->increment('visits');        
 
         return view('threads.show', compact('thread'));        
     }
@@ -132,8 +126,7 @@ class ThreadsController extends Controller
         if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
-
-        //return $threads->get();
+               
         return $threads->paginate(25);
     }
     

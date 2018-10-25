@@ -31,7 +31,12 @@ class Thread extends Model
         static::deleting(function ($thread){
             
             $thread->replies->each->delete();
-        });    
+        });   
+        
+        static::created(function ($thread){
+            
+            $thread->update(['slug' => $thread->title]);
+        });
     }   
 
     /**
@@ -83,9 +88,7 @@ class Thread extends Model
     {        
         $reply = $this->replies()->create($reply);
 
-        event(new ThreadReceivedNewReply($reply));  
-
-        //$this->notifySubscribers($reply);              
+        event(new ThreadReceivedNewReply($reply));                  
         
         return $reply;
     }   
@@ -114,8 +117,8 @@ class Thread extends Model
     public function unsubscribe($userId = null)
     {
         $this->subscriptions()
-                ->where('user_id', $userId ?: auth()->id())
-                ->delete();
+            ->where('user_id', $userId ?: auth()->id())
+            ->delete();
     }
 
     public function subscriptions()
@@ -145,22 +148,13 @@ class Thread extends Model
 
     public function setSlugAttribute($value)
     {
-        if (static::whereSlug($slug = str_slug($value))->exists()) {
-            $slug = $this->incrementSlug($slug);
-        }
-        $this->attributes['slug'] = $slug;
-    }
-
-    protected function incrementSlug($slug)
-    {        
-        $max = static::whereTitle($this->title)->latest('id')->value('slug');
+        $slug = str_slug($value);
         
-        if (is_numeric($max[-1])) {
-            return preg_replace_callback('/(\d+)$/', function ($matches) {
-                return $matches[1] + 1;
-            }, $max);
+        while (static::whereSlug($slug)->exists()) {
+            $slug = "{$slug}-" . $this->id;
         }
-        return "{$slug}-2";
-    }
+        
+        $this->attributes['slug'] = $slug;
+    }  
     
 }
