@@ -14,7 +14,9 @@ class RegisterConfirmationController extends Controller
         if (! $user) {
             return redirect(route('threads'))->with('flash', 'Unknown token.');
         }
+        
         $user->confirm();
+
         return redirect(route('threads'))
             ->with('flash', 'Your account is now confirmed! You may post to the forum.');
     
