@@ -73,4 +73,11 @@ class RegisterController extends Controller
             'confirmation_token' => str_random(25)
         ]);
     }
+
+    protected function registered(Request $request, $user)
+    {
+        Mail::to($user)->send(new PleaseConfirmYourEmail($user));
+
+        return redirect($this->redirectPath());
+    }
 }
