@@ -64828,17 +64828,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editing: false,
             id: this.data.id,
             body: this.data.body,
-            isBest: false,
-            reply: this.data
+            // isBest: this.data.isBest,
+            reply: this.data,
+            thread: window.thread
         };
     },
 
 
     computed: {
+        isBest: function isBest() {
+            return this.thread.best_reply_id == this.id;
+        },
         ago: function ago() {
             return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow() + '...';
         }
     },
+
+    // created() {
+    //     window.events.$on('best-reply-selected', id => {
+    //         this.isBest = (id === this.id)
+    //     });
+    // },
 
     methods: {
         update: function update() {
@@ -64858,7 +64868,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$emit('deleted', this.data.id);
         },
         markBestReply: function markBestReply() {
-            this.isBest = true;
+            axios.post('/replies/' + this.data.id + '/best');
+
+            this.thread.best_reply_id = this.id;
+
+            // window.events.$emit('best-reply-selected', this.data.id);
+
         }
     }
 });
