@@ -39,6 +39,9 @@ class Reply extends Model
         });
 
         static::deleted(function ($reply) {
+            // if($reply->isBest()) {
+            //     $reply->thread->update(['best_reply_id' => null]);
+            // }
             $reply->thread->decrement('replies_count');
         });
     }
@@ -97,9 +100,5 @@ class Reply extends Model
     {
         return $this->thread->best_reply_id == $this->id;
     }
-
-    // public function getIsBestAttribute()
-    // {
-    //     return $this->isBest();
-    // }
+   
 }
