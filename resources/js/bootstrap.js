@@ -18,7 +18,10 @@ window.Vue = require('vue');
 
 let authorizations = require('./authorizations');
  
-Vue.prototype.authorize = function (...params) {    
+Vue.prototype.authorize = function (...params) {  
+    
+    //console.log(params[1],);
+    
     if(! window.App.signedIn) return false;
 
     if(typeof params[0] === 'string') {
@@ -26,8 +29,7 @@ Vue.prototype.authorize = function (...params) {
     }
 
     return params[0](window.App.user);
-    //let user = window.App.user;
-    //return user ? handler(user) : false;
+    
 }
 
 Vue.prototype.signedIn = window.App.signedIn;
