@@ -1,8 +1,8 @@
 <template>       
     
-    <div :id="'reply-'+id" class="card panel-default">
+    <div :id="'reply-'+id" class="card panel">
         
-        <div class="card-header">
+        <div class="card-header" :class="isBest ? 'bg-success': 'bg-default'">
             <div class="level">
                 <h5 class="flex">
                     <a :href="'/profiles/'+data.owner.name" v-text="data.owner.name">                            
@@ -32,11 +32,15 @@
             
         </div>
         
-            <div class="card-footer level" v-if="canUpdate">
+        <div class="card-footer level">
+            <div v-if="canUpdate">
                 <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
-                <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>                
-            </div>
-       
+                <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
+            </div>   
+                       
+            <button class="btn btn-default btn-xs ml-a" @click="markBestReply" v-show="! isBest">Best Reply?</button>               
+        </div>
+    
 
     </div>
             
@@ -55,7 +59,8 @@
             return {
                 editing: false,
                 id: this.data.id,
-                body: this.data.body
+                body: this.data.body,
+                isBest: false
             };
         },
 
@@ -92,6 +97,10 @@
 
                 this.$emit('deleted', this.data.id);                                  
                 
+            },
+
+            markBestReply() {
+                this.isBest = true;
             }
         }
     }
