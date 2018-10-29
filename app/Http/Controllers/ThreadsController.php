@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Zttp\Zttp;
+use App\Rules\Recaptcha;
 use App\Trending;
 use App\Channel;
 use App\Filters\ThreadFilters;
@@ -56,23 +56,15 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Recaptcha $recaptcha)
     {       
 
         $this->validate($request, [
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
-            'channel_id' => 'required|exists:channels,id'
-        ]);
-
-        $response = Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => config('services.recaptcha.secret'),
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => request()->ip()
-        ]);
-        if (! $response->json()['success']) {
-            throw new \Exception('Recaptcha failed');
-        }
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => [$recaptcha]
+        ]);        
        
         $thread = Thread::create([
             'user_id' => auth()->id(),
@@ -107,7 +99,19 @@ class ThreadsController extends Controller
         $thread->increment('visits');        
 
         return view('threads.show', compact('thread'));        
-    }       
+    }
+    
+    public function update($channel, Thread $thread)
+    {
+        $this->authorize('update', $thread);
+
+        $thread->update(request()->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]));
+        
+        return $thread;
+    } 
 
     public function destroy($channelId, Thread $thread)
     {
