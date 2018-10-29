@@ -97,7 +97,7 @@ class ThreadsController extends Controller
         $thread->increment('visits');        
 
         return view('threads.show', compact('thread'));        
-    }
+    }       
 
     public function destroy($channelId, Thread $thread)
     {
