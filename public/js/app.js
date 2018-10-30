@@ -64703,17 +64703,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             repliesCount: this.thread.replies_count,
-            locked: this.thread.locked
+            locked: this.thread.locked,
+            title: this.thread.title,
+            body: this.thread.body,
+            form: {},
+            editing: false
+
         };
+    },
+    created: function created() {
+        this.resetForm();
     },
 
 
     methods: {
         toggleLock: function toggleLock() {
-            // ajax
-            axios[this.locked ? 'delete' : 'post']('/locked-threads/' + this.thread.slug);
+            var uri = '/locked-thread/' + this.thread.slug;
+
+            axios[this.locked ? 'delete' : 'post'](uri);
 
             this.locked = !this.locked;
+        },
+        update: function update() {
+            var _this = this;
+
+            var uri = '/threads/' + this.thread.channel.slug + '/' + this.thread.slug;
+
+            axios.patch(uri, this.form).then(function () {
+                _this.editing = false;
+                _this.title = _this.form.title;
+                _this.body = _this.form.body;
+
+                flash('Your thread has been updated.');
+            });
+        },
+        resetForm: function resetForm() {
+            this.form = {
+                title: this.thread.title,
+                body: this.thread.body
+            };
+
+            this.editing = false;
         }
     }
 });
@@ -64861,7 +64891,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             editing: false,
-            id: this.id,
+            id: this.reply.id,
             body: this.reply.body,
             isBest: this.reply.isBest
         };
@@ -64903,7 +64933,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         markBestReply: function markBestReply() {
             axios.post('/replies/' + this.id + '/best');
 
-            this.thread.best_reply_id = this.id;
+            //this.thread.best_reply_id = this.id; 
+            window.events.$emit('best-reply-selected', this.id);
         }
     }
 });

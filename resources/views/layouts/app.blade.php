@@ -9,13 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer>
-        window.App = {!! json_encode([
-                'csrfToken' => csrf_token(),
-                'signIn' => Auth::check()
-            ]) !!};
-    </script>     --}}
+    <!-- Scripts -->    
     <script>
         window.App = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -25,6 +19,11 @@
     </script> 
     
     <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    <script>
+            // window.thread = "<?= json_encode($thread); ?>"
+            window.thread = { json_encode($thread); }
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -38,25 +37,25 @@
     <style>
         body { padding-bottom: 100px; }
         .level { display: flex; align-items: center; }
+        .level-item { margin-right: 1em; }
         .flex { flex: 1; }
         .mr-1 { margin-right: 1em; }
         .ml-a { margin-left: auto; }
         [v-cloak] { display: none; }
     </style>
-    @yield('header')
+    @yield('head')
 </head>
 <body>
     <div id="app">
-
         @include ('layouts.nav')
 
         @yield('content')
     
         <flash message="{{ session('flash') }}"></flash>
-
     </div>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    @yield('scripts')
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+@yield('scripts')
 </body>
 </html>
