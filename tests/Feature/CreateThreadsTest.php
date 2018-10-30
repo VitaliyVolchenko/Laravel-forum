@@ -138,25 +138,7 @@ class CreateThreadsTest extends TestCase
 
         $this->signIn();
         $this->delete($thread->path())->assertStatus(403);
-    }
-
-    /** @test*/
-    public function a_thread_can_be_updated()
-    {
-        $this->signIn();
-
-        $thread = create('App\Thread', ['user_id' => auth()->id()]);
-
-        $this->patchJson($thread->path(), [
-            'title' => 'Changed',
-            'body' => 'Changed body.'
-        ]);
-
-        tap($thread->fresh(), function ($thread){
-            $this->assertEquals('Changed', $thread->title);
-            $this->assertEquals('Changed body.', $thread->body);
-        });        
-    }
+    }    
 
     /** @test*/
     public function authorized_users_can_delete_threads()
