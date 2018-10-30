@@ -8,10 +8,11 @@ use App\Filters\ThreadFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Notifications\ThreadWasUpdated;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    use RecordsActivity; 
+    use RecordsActivity, Searchable; 
 
     /**
      * Don't auto-apply mass assignment protection.
