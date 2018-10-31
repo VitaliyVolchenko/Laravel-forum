@@ -20,8 +20,7 @@
     
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
-    <script>
-            // window.thread = "<?= json_encode($thread); ?>"
+    <script>            
             window.thread = { json_encode($thread); }
     </script>
 
@@ -42,6 +41,7 @@
         .mr-1 { margin-right: 1em; }
         .ml-a { margin-left: auto; }
         [v-cloak] { display: none; }
+        .ais-highlight > em { background: yellow; font-style: normal; }
     </style>
     @yield('head')
 </head>
