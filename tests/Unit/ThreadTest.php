@@ -148,6 +148,13 @@ class ThreadTest extends TestCase
         $thread->subscribe();
         
         $this->assertTrue($thread->isSubscribedTo);
-    }        
+    }
+    
+    /** @test */
+    function a_threads_body_is_sanitized_automatically()
+    {
+        $thread = make('App\Thread', ['body' => '<script>alert("bad")</script><p>This is okay.</p>']);
+        $this->assertEquals("<p>This is okay.</p>", $thread->body);
+    }
 
 }

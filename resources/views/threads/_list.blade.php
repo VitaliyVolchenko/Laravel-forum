@@ -25,8 +25,10 @@
             </div>
         </div> 
 
-        <div class="card-body">                                
-            {{ $thread->body }}                                
+        <div class="card-body">    
+            <div class="body">
+                {!! $thread->body !!}
+            </div> 
         </div> 
 
         <div class="card-footer">

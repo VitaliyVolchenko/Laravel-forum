@@ -1,14 +1,8 @@
 <template>
     <div>   
         <div v-if="signedIn">         
-            <div class="forum-group"><br>                
-                <textarea name="body"
-                            id="body"
-                            class="form-control"
-                            placeholder="Have something to day?"
-                            rows="5" 
-                            required
-                            v-model="body"></textarea>                
+            <div class="forum-group"><br> 
+                <wysiwyg name="body" v-model="body" placeholder="Have something to say?" :shouldClear="completed"></wysiwyg>                
             </div>
             <button type="submit"
                     class="btn btn-default"
@@ -33,7 +27,8 @@
         
         data() {
             return {
-                body: ''                
+                body: '',
+                completed: false                
             }
         },      
 
@@ -55,16 +50,17 @@
             addReply() {
                 axios.post(location.pathname + '/replies', { body: this.body })
 
-                .catch(error => {
-                    // console.log('ERROR');
-                    // console.log(error.response);
+                .catch(error => {                    
                     flash(error.response.data, 'danger');
                 })
 
                 .then(({data}) => {
                     this.body = '';
+                    this.completed =true;
 
                     flash('Your reply has been posted.');
+
+                    //this.$refs.trix.$refs.trix.value = '';
 
                     this.$emit('created', data);
                 });

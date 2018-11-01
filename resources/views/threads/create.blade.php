@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-{{-- @section('head')
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-@endsection --}}
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -34,7 +30,7 @@
 
                             <div class="form-group">
                                 <label for="body">Body:</label>
-                                <textarea name="body" type="body" class="form-control" rows="8" id="body=" required>{{ old('body') }}</textarea>
+                                <wysiwyg name="body"></wysiwyg>                               
                             </div>
 
                             <div class="form-group">
