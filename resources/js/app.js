@@ -17,7 +17,6 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
-Vue.component('thread-view', require('./pages/Thread.vue'));
 Vue.component('reply', require('./components/Reply.vue'));
 Vue.component('favorite', require('./components/Favorite.vue'));
 Vue.component('replies', require('./components/Replies.vue'));
@@ -28,6 +27,8 @@ Vue.component('user-notifications', require('./components/UserNotifications.vue'
 Vue.component('avatar-form', require('./components/AvatarForm.vue'));
 Vue.component('image-upload', require('./components/ImageUpload.vue'));
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
+
+Vue.component('thread-view', require('./pages/Thread.vue'));
 
 
 const app = new Vue({

@@ -50656,7 +50656,6 @@ window.Vue = __webpack_require__(158);
 
 Vue.component('example-component', __webpack_require__(500));
 Vue.component('flash', __webpack_require__(503));
-Vue.component('thread-view', __webpack_require__(511));
 Vue.component('reply', __webpack_require__(166));
 Vue.component('favorite', __webpack_require__(167));
 Vue.component('replies', __webpack_require__(165));
@@ -50667,6 +50666,8 @@ Vue.component('user-notifications', __webpack_require__(530));
 Vue.component('avatar-form', __webpack_require__(533));
 Vue.component('image-upload', __webpack_require__(293));
 Vue.component('wysiwyg', __webpack_require__(538));
+
+Vue.component('thread-view', __webpack_require__(511));
 
 var app = new Vue({
   el: '#app'
@@ -50705,8 +50706,6 @@ var authorizations = __webpack_require__(480);
 
 Vue.prototype.authorize = function () {
 
-    //console.log(params[1],);
-
     if (!window.App.signedIn) return false;
 
     for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
@@ -50721,6 +50720,7 @@ Vue.prototype.authorize = function () {
 };
 
 Vue.prototype.signedIn = window.App.signedIn;
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -86355,7 +86355,6 @@ module.exports = {
     owns: function owns(model) {
         var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
 
-        //console.log(model, 'MODELLLLL')
         return model[prop] === user.id;
     },
     isAdmin: function isAdmin() {
@@ -87968,7 +87967,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-
         this.resetForm();
     },
 
@@ -88056,7 +88054,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(this.url(page)).then(this.refresh);
         },
         url: function url(page) {
-
             if (!page) {
                 var query = location.search.match(/page=(\d+)/);
 
@@ -88067,10 +88064,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         refresh: function refresh(_ref) {
             var data = _ref.data;
 
-            // console.log(response);
             this.dataSet = data;
             this.items = data.data;
-
+            //console.log('DAT ;-',data.data);
             window.scrollTo(0, 0);
         }
     }
@@ -88086,7 +88082,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Favorite_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
-//
 //
 //
 //
@@ -88190,7 +88185,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         markBestReply: function markBestReply() {
             axios.post('/replies/' + this.id + '/best');
 
-            //this.thread.best_reply_id = this.id; 
             window.events.$emit('best-reply-selected', this.id);
         }
     }
@@ -88653,16 +88647,14 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.authorize("owns", _vm.reply.thread)
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-default btn-xs ml-a",
-                    on: { click: _vm.markBestReply }
-                  },
-                  [_vm._v("Best Reply?\n        ")]
-                )
-              : _vm._e()
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-default  ml-a",
+                on: { click: _vm.markBestReply }
+              },
+              [_vm._v("Best Reply?\n        ")]
+            )
           ])
         : _vm._e()
     ]
@@ -88748,8 +88740,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.completed = true;
 
                 flash('Your reply has been posted.');
-
-                //this.$refs.trix.$refs.trix.value = '';
 
                 _this.$emit('created', data);
             });
@@ -91248,7 +91238,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         this.$refs.trix.addEventListener('trix-change', function (e) {
-            console.log('Handling');
+            //console.log('Handling');
             _this.$emit('input', e.target.innerHTML);
         });
 

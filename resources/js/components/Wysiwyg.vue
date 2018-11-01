@@ -14,7 +14,7 @@
 
         mounted () {
             this.$refs.trix.addEventListener('trix-change', e => {
-                console.log('Handling');
+                //console.log('Handling');
                 this.$emit('input', e.target.innerHTML);
             });
 

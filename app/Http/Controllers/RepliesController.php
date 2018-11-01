@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Reply;
 use App\Thread;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
@@ -48,12 +47,8 @@ class RepliesController extends Controller
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
-
         
-        request()->validate(['body' => 'required|spamfree']);
-        
-        $reply->update(request(['body']));       
-        
+        $reply->update(request()->validate(['body' => 'required|spamfree']));
     }
    
 }

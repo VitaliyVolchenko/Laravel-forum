@@ -28,7 +28,7 @@ class Reply extends Model
      *
      * @var array
      */
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'isBest'];
 
     protected static function boot()
     {

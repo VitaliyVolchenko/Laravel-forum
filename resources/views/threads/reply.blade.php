@@ -1,5 +1,4 @@
 <reply :attributes="{{ $reply }}" inline-template v-cloak>
-
     <div id="reply-{{ $reply->id }}" class="card panel-default">
 
         <div class="card-header">
@@ -29,8 +28,7 @@
                 <button class="btn btn-xs btn-link" @click="editing = false">Cancel</button>
             </div>
 
-            <div v-else v-text="body"></div>
-            
+            <div v-else v-text="body"></div>            
         </div>
 
         @can('update', $reply)
@@ -39,6 +37,5 @@
                 <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>                
             </div>
         @endcan
-
     </div>
 </reply>

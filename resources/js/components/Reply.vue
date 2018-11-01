@@ -1,7 +1,5 @@
-<template>       
-    
+<template>    
     <div :id="'reply-'+id" class="card panel">
-        
         <div class="card-header" :class="isBest ? 'bg-success': 'bg-default'">
             <div class="level">
                 <h5 class="flex">
@@ -14,8 +12,8 @@
                 </div>
                
             </div>
-        </div>    
-        
+        </div>       
+
         <div class="card-body">
             <div v-if="editing">
                 <form @submit="update">
@@ -32,25 +30,27 @@
             
         </div>
         
-        <div class="card-footer level" v-if="authorize('owns', reply) || authorize('owns', reply.thread)">
-            <div v-if="authorize('owns', reply)">
+        <div class="card-footer level" v-if="authorize('owns', reply) || authorize('owns', reply.thread)">            
+             <div v-if="authorize('owns', reply)">
                 <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
                 <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
-            </div>   
+            </div>  
 
-            <button class="btn btn-default btn-xs ml-a" @click="markBestReply" 
-                    v-if="authorize('owns', reply.thread)">Best Reply?
-            </button>               
-        </div>
-    
+            <!-- v-if="authorize('owns', reply.thread)" -->
+            <button class="btn btn-xs btn-default  ml-a" @click="markBestReply" 
+                    >Best Reply?
+            </button> 
+            
+        </div>    
 
-    </div>
+    </div> 
             
 </template>
 
 <script>
     import Favorite from './Favorite.vue'; 
     import moment from 'moment';
+
 
     export default {
         props: ['reply'],
@@ -102,10 +102,8 @@
 
             markBestReply() {
                 axios.post('/replies/' + this.id + '/best');
-
-                //this.thread.best_reply_id = this.id; 
+                 
                 window.events.$emit('best-reply-selected', this.id);
-
             }
         }
     }

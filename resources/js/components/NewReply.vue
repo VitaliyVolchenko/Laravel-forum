@@ -29,7 +29,7 @@
             return {
                 body: '',
                 completed: false                
-            }
+            };
         },      
 
         mounted() {
@@ -59,9 +59,7 @@
                     this.completed =true;
 
                     flash('Your reply has been posted.');
-
-                    //this.$refs.trix.$refs.trix.value = '';
-
+                   
                     this.$emit('created', data);
                 });
             }
